@@ -752,22 +752,56 @@ async def cb_handler(client: Client, query: CallbackQuery):
                     await query.answer(f"Hᴇʏ {query.from_user.first_name}, Tʜɪs Is Nᴏᴛ Yᴏᴜʀ Mᴏᴠɪᴇ Rᴇǫᴜᴇsᴛ. Rᴇǫᴜᴇsᴛ Yᴏᴜʀ's !", show_alert=True)
             else:
                 if clicked == typed:
-                    await client.send_cached_media(
-                        chat_id=query.from_user.id,
+                    file_send=await client.send_cached_media(
+                        chat_id=FILE_CHANNEL,
                         file_id=file_id,
-                        caption=f_caption,
+                        caption=script.CHANNEL_CAP.format(query.from_user.mention, title, query.message.chat.title),
                         protect_content=True if ident == "filep" else False,
+                        reply_markup=InlineKeyboardMarkup(
+                             [
+                                [
+                                     InlineKeyboardButton('📤𝐉𝐨𝐢𝐧 𝐂𝐡𝐚𝐧𝐧𝐞𝐥📤', url="https://t.me/+7oxSIxY4X0c2ZGVl")
+                                 ],
+                                 [
+                                 InlineKeyboardButton('🧩𝐔𝐩𝐝𝐚𝐭𝐞🧩', url="https://t.me/bigmoviesworld"),
+                                 InlineKeyboardButton('☘𝐒𝐮𝐩𝐩𝐨𝐫𝐭☘', url="https://t.me/NasraniChatGroup")
+                                 ]                            
+                             ]
+                         )
+                     )
+                    Joel_tgx = await query.message.reply_text(
+                        
+                        script.FILE_MSG.format(query.from_user.mention, title, size),
+                        parse_mode=enums.ParseMode.HTML,
                         reply_markup=InlineKeyboardMarkup(
                             [
                              [
-                              InlineKeyboardButton('Sᴜᴘᴘᴏʀᴛ Gʀᴏᴜᴘ', url=GRP_LNK),
-                              InlineKeyboardButton('Uᴘᴅᴀᴛᴇs Cʜᴀɴɴᴇʟ', url=CHNL_LNK)
+                              InlineKeyboardButton('📥 𝐃𝐨𝐰𝐧𝐥𝐨𝐚𝐝 𝐋𝐢𝐧𝐤 📥 ', url = file_send.link)
                            ],[
-                              InlineKeyboardButton("Bᴏᴛ Oᴡɴᴇʀ", url="t.me/creatorbeatz")
+                              InlineKeyboardButton("⚠️ 𝐂𝐚𝐧'𝐭 𝐀𝐜𝐜𝐞𝐬𝐬 ❓ 𝐂𝐥𝐢𝐜𝐤 𝐇𝐞𝐫𝐞 ⚠️", url=(FILE_FORWARD))
                              ]
                             ]
                         )
                     )
+                    if settings['auto_delete']:
+                        await asyncio.sleep(600)
+                        await Joel_tgx.delete()
+                        await file_send.delete()
+
+                    k = await client.send_message(
+                        chat_id=FILE_CHANNEL,                        
+                        text=script.DONE_MSG.format(query.from_user.mention, title, size),
+                        parse_mode=enums.ParseMode.HTML,
+                        reply_markup=InlineKeyboardMarkup(
+                            [
+                                [
+                                    InlineKeyboardButton("🔥 ᴄʜᴀɴɴᴇʟ 🔥", url=(MAIN_CHANNEL))
+                                ]
+                            ]
+                        )
+                    )
+                    await asyncio.sleep(180)
+                    await k.delete()
                 else:
                     await query.answer(f"Hᴇʏ {query.from_user.first_name}, Tʜɪs Is Nᴏᴛ Yᴏᴜʀ Mᴏᴠɪᴇ Rᴇǫᴜᴇsᴛ. Rᴇǫᴜᴇsᴛ Yᴏᴜʀ's !", show_alert=True)
                 await query.answer('Cʜᴇᴄᴋ PM, I ʜᴀᴠᴇ sᴇɴᴛ ғɪʟᴇs ɪɴ PM', show_alert=True)
@@ -842,6 +876,20 @@ async def cb_handler(client: Client, query: CallbackQuery):
         )
     elif query.data == "pages":
         await query.answer()
+
+    elif query.data.startswith("grp_checksub"):
+        userid = query.message.reply_to_message.from_user.id
+        if int(userid) not in [query.from_user.id, 0]:
+            return await query.answer("This Is Not For You!", show_alert=True)
+        if LOGIN_CHANNEL and not await mute_login(client, query):
+            await query.answer("Please join first my Updates Channel", show_alert=True)
+            return
+        await client.unban_chat_member(query.message.chat.id, query.from_user.id)
+        await query.answer("Can You Request Now!", show_alert=True)
+        await query.message.delete()
+        await query.message.reply_to_message.delete()
+
+
 
     elif query.data.startswith("send_fall"):
         temp_var, ident, offset = query.data.split("#")
@@ -2558,19 +2606,21 @@ async def auto_filter(client, msg, spoll=False):
 
     try:
         key = f"{message.chat.id}-{message.id}"
+        BUTTONS[key] = search
         if settings['auto_delete']:
             btn.insert(0, 
                 [
-                    InlineKeyboardButton("ᴀʟʟ​", callback_data=f"send_fall#files#{offset}"),
-                    InlineKeyboardButton("sᴇʟᴇᴄᴛ​", callback_data="ooooo")
+                    InlineKeyboardButton(f'𝐅𝐢𝐥𝐞𝐬: {total_results}', 'dupe'),
+                    InlineKeyboardButton("ʟᴀɴɢᴜᴀɢᴇs", callback_data=f"languages#{search.replace(' ', '_')}#{key}"),
+                    InlineKeyboardButton(f'{search}', 'imdb')
                 ]
             )
-
         else:
             btn.insert(0, 
                 [
-                    InlineKeyboardButton("ᴀʟʟ​", callback_data=f"send_fall#files#{offset}"),
-                    InlineKeyboardButton("sᴇʟᴇᴄᴛ​", callback_data="ooooo")
+                    InlineKeyboardButton(f'𝐅𝐢𝐥𝐞𝐬: {total_results}', 'dupe'),
+                    InlineKeyboardButton("ʟᴀɴɢᴜᴀɢᴇs", callback_data=f"languages#{search.replace(' ', '_')}#{key}"),
+                    InlineKeyboardButton(f'{search}', 'imdb')
                 ]
             )
                 
@@ -2581,22 +2631,31 @@ async def auto_filter(client, msg, spoll=False):
         if settings['auto_delete']:
             btn.insert(0, 
                 [
-                    InlineKeyboardButton("ᴀʟʟ​", callback_data=f"send_fall#files#{offset}"),
-                    InlineKeyboardButton("sᴇʟᴇᴄᴛ​", callback_data="ooooo")
+                    InlineKeyboardButton(f'𝐅𝐢𝐥𝐞𝐬: {total_results}', 'dupe'),
+                    InlineKeyboardButton("ʟᴀɴɢᴜᴀɢᴇs", callback_data=f"languages#{search.replace(' ', '_')}#{key}"),
+                    InlineKeyboardButton(f'{search}', 'imdb')
                 ]
             )
 
         else:
             btn.insert(0, 
                 [
-                    InlineKeyboardButton("ᴀʟʟ​", callback_data=f"send_fall#files#{offset}"),
-                    InlineKeyboardButton("sᴇʟᴇᴄᴛ​", callback_data="ooooo")
+                    InlineKeyboardButton(f'𝐅𝐢𝐥𝐞𝐬: {total_results}', 'dupe'),
+                    InlineKeyboardButton("ʟᴀɴɢᴜᴀɢᴇs", callback_data=f"languages#{search.replace(' ', '_')}#{key}"),
+                    InlineKeyboardButton(f'{search}', 'imdb')
                 ]
-            )
-
+            )    
     btn.insert(0, [
-        InlineKeyboardButton("⭕️ ʟᴀɴɢᴜᴀɢᴇs ⭕️", callback_data=f"languages#{search.replace(' ', '_')}#{key}")
+        InlineKeyboardButton("ꜱᴇɴᴅ ᴀʟʟ", callback_data=f"send_fall#{pre}#{message.chat.id}-{message.id}#{0}"),
+        InlineKeyboardButton("ꜱᴇʟᴇᴄᴛ", 'dupe')
     ])
+    btn.insert(1, [
+        InlineKeyboardButton(f'🔍 {search} 🔎', 'reqst1')
+    ])
+    await message.delete()
+    m=await message.reply_text("🔍") 
+    await asyncio.sleep(1)
+    await m.delete()
 
     if offset != "":
         key = f"{message.chat.id}-{message.id}"
@@ -2625,7 +2684,7 @@ async def auto_filter(client, msg, spoll=False):
                 )
     else:
         btn.append(
-            [InlineKeyboardButton(text="♨️ ɴᴏ ᴍᴏʀᴇ ᴘᴀɢᴇs ᴀᴠᴀɪʟᴀʙʟᴇ ♨️",callback_data="pages")]
+            [InlineKeyboardButton(text="♨️𝐍𝐎 𝐌𝐎𝐑𝐄 𝐏𝐀𝐆𝐄𝐒 𝐀𝐕𝐀𝐈𝐋𝐀𝐁𝐋𝐄♨️",callback_data="pages")]
         )
     imdb = await get_poster(search, file=(files[0]).file_name) if settings["imdb"] else None
     TEMPLATE = settings['template']
