@@ -152,7 +152,7 @@ async def start(client, message):
                     reply_markup=InlineKeyboardMarkup(
                         [
                          [
-                          InlineKeyboardButton("❤️‍🔥 ᴍᴏᴠɪᴇs ❤️‍🔥", url='https://t.me/CKTalkies')        
+                          InlineKeyboardButton(f'{file_size}, url='https://t.me/CKTalkies')        
                          ]
                         ]
                     )
