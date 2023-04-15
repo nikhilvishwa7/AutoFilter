@@ -493,7 +493,7 @@ async def filter_languages_cb_handler(client: Client, query: CallbackQuery):
             )
 
     btn.insert(0, [
-        InlineKeyboardButton("!! sᴇɴᴅ ᴀʟʟ​ !!", callback_data=f"send_fall#files#{offset}"),
+        InlineKeyboardButton("! Sᴇɴᴅ Aʟʟ Fɪʟᴇs Tᴏ PM !", callback_data=f"send_fall#files#{offset}")
     ])
     offset = 0
 
