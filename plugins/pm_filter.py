@@ -1289,6 +1289,7 @@ async def cb_handler(client: Client, query: CallbackQuery):
         
     elif query.data == "imdb1":
         await query.answer(text=cap, show_alert=True)
+    try: await query.answer('fdyfubh')
     except: pass
 
     elif query.data == "start":
