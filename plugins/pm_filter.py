@@ -1286,11 +1286,6 @@ async def cb_handler(client: Client, query: CallbackQuery):
 
     elif query.data == "tamil":
         await query.answer(text=script.TAMIL_TXT, show_alert=True)
-        
-    elif query.data == "imdb1":
-        await query.answer(text=cap, show_alert=True)
-    try: await query.answer('fdyfubh')
-    except: pass
 
     elif query.data == "start":
         buttons = [[
@@ -2490,7 +2485,11 @@ async def cb_handler(client: Client, query: CallbackQuery):
             reply_markup = InlineKeyboardMarkup(buttons)
             await query.message.edit_reply_markup(reply_markup)
     await query.answer(MSG_ALRT)
-
+    
+    elif query.data == "imdb1":
+        await query.answer(text=cap, show_alert=True)
+    try: await query.answer('fdyfubh')
+    except: pass
     
 async def auto_filter(client, msg, spoll=False):
     reqstr1 = msg.from_user.id if msg.from_user else 0
