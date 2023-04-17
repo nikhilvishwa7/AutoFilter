@@ -1,12 +1,13 @@
 from pyrogram import Client, filters, enums
-import re, asyncio, time, shutil, psutil, os, sys
+import math
+from datetime import datetime
 from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup, CallbackQuery
 from pyrogram.errors.exceptions.bad_request_400 import MessageTooLong, PeerIdInvalid
 from info import BOT_START_TIME, ADMINS, LOG_CHANNEL, SUPPORT_CHAT, MELCOW_NEW_USERS, MELCOW_VID, CHNL_LNK, GRP_LNK, NEWGRP
 from database.users_chats_db import db
 from database.ia_filterdb import Media
-from utils import humanbytes 
 from utils import get_size, temp, get_settings
+from utils import get_size, temp, get_settings, get_readable_time
 from Script import script
 from pyrogram.errors import ChatAdminRequired
 import asyncio 
@@ -278,24 +279,28 @@ async def list_chats(bot, message):
         await message.reply_document('chats.txt', caption="List Of Chats")
         
         
-@Client.on_message(filters.private & filters.command("status") & filters.user(ADMINS))          
-async def stats(bot, update):
-    currentTime = time.strftime("%Hh%Mm%Ss", time.gmtime(time.time() - BOT_START_TIME))
-    total, used, free = shutil.disk_usage(".")
-    total = humanbytes(total)
-    used = humanbytes(used)
-    free = humanbytes(free)
-    cpu_usage = psutil.cpu_percent()
-    ram_usage = psutil.virtual_memory().percent
-    disk_usage = psutil.disk_usage('/').percent
-
-    ms_g = f"""<b><u>Bot Status</b></u>
-Uptime: <code>{currentTime}</code>
-CPU Usage: <code>{cpu_usage}%</code>
-RAM Usage: <code>{ram_usage}%</code>
-Total Disk Space: <code>{total}</code>
-Used Space: <code>{used} ({disk_usage}%)</code>
-Free Space: <code>{free}</code> """
-
-    msg = await bot.send_message(chat_id=LOG_CHANNEL, text="__Processing...__", parse_mode=enums.ParseMode.MARKDOWN)         
-    await msg.edit_text(text=ms_g, parse_mode=enums.ParseMode.HTML)
+@Client.on_message(filters.command('status') & filters.user(ADMINS) & filters.incoming)
+async def get_ststs(bot, message):
+    buttons = [[
+            InlineKeyboardButton("✗ ᴄʟᴏsᴇ​ ✗", callback_data='close_data')
+    ]]
+    reply_markup = InlineKeyboardMarkup(buttons)
+    kdbotz = await message.reply('Fetching stats..')
+    now = datetime.now()
+    delta = now - bot.uptime
+    uptime = get_readable_time(delta.seconds)
+    ram = psutil.virtual_memory().percent
+    cpu = psutil.cpu_percent()
+    total_users = await db.total_users_count()
+    totl_chats = await db.total_chat_count()
+    files = await Media.count_documents()
+    size = await db.get_db_size()
+    free = 536870912 - size
+    size = get_size(size)
+    free = get_size(free)
+    await kdbotz.edit_text(
+            text=script.ADMIN_STATUS_TXT.format(uptime, ram, cpu, files, total_users, totl_chats, size, free),
+            disable_web_page_preview=True,
+            reply_markup=reply_markup,
+            parse_mode=enums.ParseMode.HTML
+        )
