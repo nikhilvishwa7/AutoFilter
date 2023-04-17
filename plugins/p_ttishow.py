@@ -282,7 +282,7 @@ async def list_chats(bot, message):
 @Client.on_message(filters.command('status') & filters.user(ADMINS) & filters.incoming)
 async def get_ststs(bot, message):
     buttons = [[
-            InlineKeyboardButton("✗ ᴄʟᴏsᴇ​ ✗", callback_data='close_data')
+            InlineKeyboardButton('✘ ᴄʟᴏsᴇ ✘', callback_data='close_data')
     ]]
     reply_markup = InlineKeyboardMarkup(buttons)
     kdbotz = await message.reply('Fetching stats..')
@@ -299,8 +299,8 @@ async def get_ststs(bot, message):
     size = get_size(size)
     free = get_size(free)
     await kdbotz.edit_text(
-            text=script.ADMIN_STATUS_TXT.format(uptime, ram, cpu, files, total_users, totl_chats, size, free),
-            disable_web_page_preview=True,
+            text=script.ADMIN_STATUS_TXT.format(uptime, cpu, ram, files, total_users, totl_chats, size, free),
             reply_markup=reply_markup,
             parse_mode=enums.ParseMode.HTML
         )
+    
