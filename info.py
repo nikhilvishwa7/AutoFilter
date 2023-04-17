@@ -1,6 +1,7 @@
 import re
 from os import environ
 from Script import script 
+from time import time
 
 id_pattern = re.compile(r'^.\d+$')
 def is_enabled(value, default):
@@ -30,6 +31,7 @@ PICS = (environ.get('PICS', 'https://telegra.ph/file/ac524f66eec140ec69db5.jpg h
 NOR_IMG = (environ.get('NOR_IMG', 'https://telegra.ph/file/46443096bc6895c74a716.jpg https://telegra.ph/file/225f3f15a9e3230188811.jpg https://telegra.ph/file/703c3040bcd811991aae5.jpg')).split()
 NEWGRP = environ.get("NEWGRP", "https://telegra.ph/file/732a9f89be5a9cd63289b.jpg")
 MELCOW_VID = environ.get("MELCOW_VID", "https://telegra.ph/file/f7f2a532fe4b990044507.mp4")
+BOT_START_TIME = time()
 
 # Admins, Channels & Users
 ADMINS = [int(admin) if id_pattern.search(admin) else admin for admin in environ.get('ADMINS', '5977113116').split()]
