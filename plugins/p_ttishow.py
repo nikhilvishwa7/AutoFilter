@@ -1,7 +1,8 @@
 from pyrogram import Client, filters, enums
+import re, asyncio, time, shutil, psutil, os, sys
 from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup, CallbackQuery
 from pyrogram.errors.exceptions.bad_request_400 import MessageTooLong, PeerIdInvalid
-from info import ADMINS, LOG_CHANNEL, SUPPORT_CHAT, MELCOW_NEW_USERS, MELCOW_VID, CHNL_LNK, GRP_LNK, NEWGRP
+from info import BOT_START_TIME, ADMINS, LOG_CHANNEL, SUPPORT_CHAT, MELCOW_NEW_USERS, MELCOW_VID, CHNL_LNK, GRP_LNK, NEWGRP
 from database.users_chats_db import db
 from database.ia_filterdb import Media
 from utils import get_size, temp, get_settings
@@ -274,3 +275,26 @@ async def list_chats(bot, message):
         with open('chats.txt', 'w+') as outfile:
             outfile.write(out)
         await message.reply_document('chats.txt', caption="List Of Chats")
+        
+        
+@Client.on_message(filters.private & filters.command("status") & filters.user(ADMINS))          
+async def stats(bot, update):
+    currentTime = time.strftime("%Hh%Mm%Ss", time.gmtime(time.time() - BOT_START_TIME))
+    total, used, free = shutil.disk_usage(".")
+    total = humanbytes(total)
+    used = humanbytes(used)
+    free = humanbytes(free)
+    cpu_usage = psutil.cpu_percent()
+    ram_usage = psutil.virtual_memory().percent
+    disk_usage = psutil.disk_usage('/').percent
+
+    ms_g = f"""<b><u>Bot Status</b></u>
+Uptime: <code>{currentTime}</code>
+CPU Usage: <code>{cpu_usage}%</code>
+RAM Usage: <code>{ram_usage}%</code>
+Total Disk Space: <code>{total}</code>
+Used Space: <code>{used} ({disk_usage}%)</code>
+Free Space: <code>{free}</code> """
+
+    msg = await bot.send_message(chat_id=LOG_CHANNEL, text="__Processing...__", parse_mode=enums.ParseMode.MARKDOWN)         
+    await msg.edit_text(text=ms_g, parse_mode=enums.ParseMode.HTML)
