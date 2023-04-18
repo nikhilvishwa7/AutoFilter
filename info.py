@@ -2,6 +2,9 @@ import re
 from os import environ
 from Script import script 
 from time import time
+from dotenv import load_dotenv
+
+# load_dotenv("./config.env")
 
 id_pattern = re.compile(r'^.\d+$')
 def is_enabled(value, default):
@@ -38,9 +41,7 @@ ADMINS = [int(admin) if id_pattern.search(admin) else admin for admin in environ
 CHANNELS = [int(ch) if id_pattern.search(ch) else ch for ch in environ.get('CHANNELS', '-1001660042792 -1001541833234').split()]
 auth_users = [int(user) if id_pattern.search(user) else user for user in environ.get('AUTH_USERS', '').split()]
 AUTH_USERS = (auth_users + ADMINS) if auth_users else []
-auth_channel = environ.get('AUTH_CHANNEL')
 auth_grp = environ.get('AUTH_GROUP')
-AUTH_CHANNEL = int(auth_channel) if auth_channel and id_pattern.search(auth_channel) else None
 AUTH_GROUPS = [int(ch) for ch in auth_grp.split()] if auth_grp else None
 support_chat_id = environ.get('SUPPORT_CHAT_ID')
 reqst_channel = environ.get('REQST_CHANNEL_ID')
@@ -64,6 +65,11 @@ COMMAND_HAND_LER = environ.get("COMMAND_HAND_LER", "/")
 
 #Downloader
 DOWNLOAD_LOCATION = environ.get("DOWNLOAD_LOCATION", "./DOWNLOADS/AudioBoT/")
+
+# FSUB
+REQ_CHANNEL = environ.get("REQ_CHANNEL", False)
+REQ_CHANNEL = int(REQ_CHANNEL) if REQ_CHANNEL and id_pattern.search(REQ_CHANNEL) else False
+JOIN_REQS_DB = environ.get("JOIN_REQS_DB", DATABASE_URI)
 
 # Others
 VERIFY = bool(environ.get('VERIFY', False))
