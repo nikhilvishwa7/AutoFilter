@@ -33,4 +33,4 @@ python-math
 psutil==5.9.4
 Pillow
 speedtest-cli
-humanize==4.6.0
+python-dotenv
