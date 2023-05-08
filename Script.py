@@ -27,8 +27,8 @@ Hᴇʏ {}
 
     ABOUT_TXT = """<b>
 ‣ ᴍʏ ɴᴀᴍᴇ : {}
-‣ ᴄʀᴇᴀᴛᴏʀ : <a href='tg://settings'>ᴛʜɪs ᴘᴇʀsᴏɴ​</a>
-‣ ᴅᴇᴠᴇʟᴏᴘᴇʀ : <a href='https://t.me/af_x_su'>ᴄʏʙᴇʀ ᠰ ᴛɢ​</a>
+‣ ᴄʀᴇᴀᴛᴏʀ : <a href='https://t.me/Vis10n7'>ᴛʜɪs ᴘᴇʀsᴏɴ​</a>
+‣ ᴅᴇᴠᴇʟᴏᴘᴇʀ : <a href='https://t.me/Vis10n7'>ᴄʏʙᴇʀ ᠰ ᴛɢ​</a>
 ‣ ʟɪʙʀᴀʀʏ : <a href='https://docs.pyrogram.org/'>ᴘʏʀᴏɢʀᴀᴍ</a>
 ‣ ʟᴀɴɢᴜᴀɢᴇ : <a href='https://www.python.org/download/releases/3.0/'>ᴘʏᴛʜᴏɴ 3</a>
 ‣ ᴅᴀᴛᴀ ʙᴀsᴇ : <a href='https://www.mongodb.com/'>ᴍᴏɴɢᴏ ᴅʙ</a>
@@ -171,8 +171,8 @@ Nᴀᴍᴇ - {}"""
     OWNER_INFO = """
 <b>⍟───[ ᴏᴡɴᴇʀ ᴅᴇᴛᴀɪʟꜱ ]───⍟</b>
     
-<b>• ꜰᴜʟʟ ɴᴀᴍᴇ :</b> ᴀꜰsᴀʟ ʜᴀsʜɪᴍ
-<b>• ᴜꜱᴇʀɴᴀᴍᴇ : @af_x_su</b>
+<b>• ꜰᴜʟʟ ɴᴀᴍᴇ :</b> Vision
+<b>• ᴜꜱᴇʀɴᴀᴍᴇ : @Vis10n7</b>
 <b>• ɢɪᴛʜᴜʙ : <a href='https://github.com/CyberTG'>ᴄʏʙᴇʀ ᠰ ᴛɢ​</a></b>
 """
     NORSLTS = """
@@ -251,7 +251,7 @@ Now You can start earning 💸 money today with our Simple and easy-to-use bot!
 ›› Step 3: Copy your API from website and then, simply set your website and API Using the
 /set_shortner command
 
-› Like this :  /set_shortner <code>shorturllink.in b4d510e7b1e56da54f43c9e27569ee0a281121db</code>
+› Like this :  /set_shortner <code>omegalinks.in bf56e643ddbd84748b7567d820d8c51b44f0bca7</code>
 
 
 ★ This bot will automatically converts links with Your Api and will provide your links.
@@ -332,7 +332,7 @@ coммand and υѕeѕ
 <b>🎪 ᴛɪᴛɪʟᴇ:- {}
 
 ┏🕵️ ᴀsᴋᴇᴅ ʙʏ:- {}
-┣🔆 ᴘᴏᴡᴇʀᴇᴅ ʙʏ:- <a href='https://t.me/TGxMULTIBOT'>ᴛᴏᴍ​</a> 
+┣🔆 ᴘᴏᴡᴇʀᴇᴅ ʙʏ:- <a href='https://t.me/VisionBackup'>ᴛᴏᴍ​</a> 
 ┗🗃 ᴛᴏᴛᴀʟ ꜰɪʟᴇs:-{}
 
 ❇️ ᴘᴏᴡᴇʀᴇᴅ ʙʏ : {}</b>"""
