@@ -173,7 +173,7 @@ Nᴀᴍᴇ - {}"""
     
 <b>• ꜰᴜʟʟ ɴᴀᴍᴇ :</b> Vision
 <b>• ᴜꜱᴇʀɴᴀᴍᴇ : @Vis10n7</b>
-<b>• ɢɪᴛʜᴜʙ : <a href='https://github.com/CyberTG'>ᴄʏʙᴇʀ ᠰ ᴛɢ​</a></b>
+
 """
     NORSLTS = """
 ★ #𝗡𝗼𝗥𝗲𝘀𝘂𝗹𝘁𝘀 ★
